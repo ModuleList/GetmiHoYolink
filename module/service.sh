@@ -16,4 +16,4 @@ else
 fi
 
 chmod +x ${MODDIR}/GetmiHoYolink
-nohup ${busybox_path} setuidgid "root:net_admin" ${Clash_user_group} ${MODDIR}/GetmiHoYolink 2>&1 &
+nohup ${busybox_path} setuidgid "root:net_admin" ${Clash_user_group} ${MODDIR}/GetmiHoYolink start 2>&1 &
