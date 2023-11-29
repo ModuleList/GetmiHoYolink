@@ -107,7 +107,8 @@ int isProcessRunning(const char *PackageName) {
             
             if (ptr->d_type != DT_DIR)
                 continue;
-            sprintf(filepath, "/proc/%s/cmdline", ptr->d_name);
+                
+            snprintf(filepath, sizeof(filepath), "/proc/%s/cmdline", ptr->d_name);
             // 使用动态分配的内存来存储命令行参数
             char *filetext = NULL;
             FILE *fp = fopen(filepath, "r");
@@ -115,8 +116,7 @@ int isProcessRunning(const char *PackageName) {
             if (NULL != fp) {
                 size_t len = 0;
                 ssize_t read = getline(&filetext, &len, fp);
-                free(filetext);
-                fclose(fp);
+                fclose(fp); // 关闭文件
                 
                 if (read != -1) {
                     // 移除命令行参数中的换行符
@@ -140,6 +140,7 @@ int isProcessRunning(const char *PackageName) {
     
     return 0; // 如果未找到进程，返回0
 }
+
 int main(int argc, char *argv[]) {
     initLog();
     if (argc > 1 && strcmp(argv[1], "start") == 0) {
