@@ -57,8 +57,8 @@ void closeLog() {
 }
 
 void openUrl(const char *url) {
+    writeLog("跳转浏览器");
     char command[1024];
-    writeLog("已获取到链接 跳转浏览器");
     snprintf(command, sizeof(command), "am start -a android.intent.action.VIEW -d \"%s\"", url);
     system(command);
 }
@@ -82,9 +82,11 @@ int start() {
     }
 
     while (fgets(buffer, sizeof(buffer), logcatFile) != NULL) {
-        char *url = strstr(buffer, "webstatic.mihoyo.com");
+        char *url = strstr(buffer, "https://webstatic.mihoyo.com");
         if (url) {
             url[strcspn(url, "\r\n")] = '\0';  // 移除换行符
+            writeLog("已获取到链接:");
+            writeLog(url);
             processUrl(url);
         }
     }
