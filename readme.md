@@ -13,4 +13,5 @@ make
 ```
 
 Instructions:
+
 **flash magisk/kernelsu module**
